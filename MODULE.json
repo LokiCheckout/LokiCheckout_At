@@ -1,0 +1,46 @@
+{
+    "module_name": "LokiCheckout_At",
+    "composer_name": "loki-checkout/magento2-at",
+    "sequence": [
+        "LokiCheckout_Core"
+    ],
+    "php_versions": [
+        "8.1",
+        "8.2",
+        "8.3",
+        "8.4"
+    ],
+    "skip_magento_versions": [],
+    "skip_css_utils": false,
+    "modules": [
+        "LokiCheckout_Core",
+        "Loki_Base",
+        "Loki_Components",
+        "Loki_CssUtils",
+        "Loki_FieldComponents",
+        "Loki_MapComponents",
+        "Magento_Backend",
+        "Magento_Catalog",
+        "Magento_Checkout",
+        "Magento_CheckoutAgreements",
+        "Magento_Config",
+        "Magento_Customer",
+        "Magento_Directory",
+        "Magento_Eav",
+        "Magento_Newsletter",
+        "Magento_Payment",
+        "Magento_Quote",
+        "Magento_Sales",
+        "Magento_SalesRule",
+        "Magento_Shipping",
+        "Magento_Store",
+        "Magento_Tax",
+        "Magento_Vault",
+        "Yireo_CspUtilities"
+    ],
+    "components": [],
+    "config": [],
+    "tests": [],
+    "phpcs_severity": "1",
+    "phpstan_level": "9"
+}

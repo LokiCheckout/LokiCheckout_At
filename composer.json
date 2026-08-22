@@ -1,0 +1,26 @@
+{
+    "name": "loki-checkout/magento2-at",
+    "version": "1.0.0",
+    "description": "Austrian settings for LokiCheckout",
+    "keywords": [
+        "loki-checkout",
+        "loki-checkout-category-country"
+    ],
+    "type": "magento2-module",
+    "require": {
+        "loki-checkout/magento2-core": "^2.0",
+        "magento/framework": "^103.0"
+    },
+    "license": "OSL-3.0",
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "LokiCheckout\\At\\": ""
+        }
+    },
+    "extra": {
+        "label": "Austrian Settings"
+    }
+}
