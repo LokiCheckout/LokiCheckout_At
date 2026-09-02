@@ -2,7 +2,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:LokiCheckout_Core:etc/loki_checkout.xsd">
     <grid_layouts>
         <grid_layout name="default_grid">
-            <grid name="german" countryId="DE" parent="default">
+            <grid name="austria" countryId="AT" parent="default">
                 <block alias="country_id" mdColSpan="12" />
             </grid>
         </grid_layout>
