@@ -3,8 +3,7 @@
     "version": "1.0.0",
     "description": "Austrian settings for LokiCheckout",
     "keywords": [
-        "loki-checkout",
-        "loki-checkout-category-country"
+        "loki-checkout"
     ],
     "type": "magento2-module",
     "require": {
@@ -20,8 +19,5 @@
         "psr-4": {
             "LokiCheckout\\At\\": ""
         }
-    },
-    "extra": {
-        "label": "Austrian Settings"
     }
 }
