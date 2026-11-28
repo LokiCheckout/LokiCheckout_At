@@ -5,14 +5,15 @@ namespace LokiCheckout\At\Test\Integration;
 
 use LokiCheckout\Core\Config\LokiCheckoutModules;
 use Magento\Framework\Module\ModuleList;
-use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\TestCase;
 
 class ModuleTest extends TestCase
 {
+    use ObjectManagerTrait;
+
     public function testModuleIsEnabledAfterCore(): void
     {
-        $moduleNames = Bootstrap::getObjectManager()->get(ModuleList::class)->getNames();
+        $moduleNames = $this->get(ModuleList::class)->getNames();
         $this->assertContains('LokiCheckout_At', $moduleNames);
         $this->assertGreaterThan(
             array_search('LokiCheckout_Core', $moduleNames, true),
@@ -22,7 +23,7 @@ class ModuleTest extends TestCase
 
     public function testModuleIsRegisteredWithLokiCheckout(): void
     {
-        $lokiCheckoutModules = Bootstrap::getObjectManager()->get(LokiCheckoutModules::class);
+        $lokiCheckoutModules = $this->get(LokiCheckoutModules::class);
         $this->assertContains('LokiCheckout_At', $lokiCheckoutModules->getModules());
         $this->assertContains('LokiCheckout_At', $lokiCheckoutModules->getActiveModules());
         $this->assertTrue($lokiCheckoutModules->hasModule('LokiCheckout_At'));

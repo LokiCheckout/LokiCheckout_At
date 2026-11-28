@@ -3,18 +3,20 @@ declare(strict_types=1);
 
 namespace LokiCheckout\At\Test\Integration\Config\XmlConfig\Value\GridLayout;
 
+use LokiCheckout\At\Test\Integration\ObjectManagerTrait;
 use LokiCheckout\Core\Config\XmlConfig;
 use Magento\TestFramework\Fixture\Cache;
-use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class GridTest extends TestCase
 {
+    use ObjectManagerTrait;
+
     #[Cache('config', false)]
     public function testCountryIdSpansFullWidth(): void
     {
-        $gridLayout = Bootstrap::getObjectManager()->get(XmlConfig::class)->getGridLayout('default_grid');
+        $gridLayout = $this->get(XmlConfig::class)->getGridLayout('default_grid');
         $this->assertContains('austria', $gridLayout->getGridNames());
 
         $block = $gridLayout->getGridByName('austria')->getBlock('country_id');
@@ -26,7 +28,7 @@ class GridTest extends TestCase
     #[DataProvider('getInheritedBlockAliases')]
     public function testBlocksAreInheritedFromDefaultGrid(string $blockAlias): void
     {
-        $gridLayout = Bootstrap::getObjectManager()->get(XmlConfig::class)->getGridLayout('default_grid');
+        $gridLayout = $this->get(XmlConfig::class)->getGridLayout('default_grid');
         $austrianBlock = $gridLayout->getGridByName('austria')->getBlock($blockAlias);
         $defaultBlock = $gridLayout->getGridByName('default')->getBlock($blockAlias);
 
@@ -35,6 +37,9 @@ class GridTest extends TestCase
         $this->assertSame($defaultBlock->getSortOrder(), $austrianBlock->getSortOrder());
     }
 
+    /**
+     * @return array<int, array{string}>
+     */
     public static function getInheritedBlockAliases(): array
     {
         return [

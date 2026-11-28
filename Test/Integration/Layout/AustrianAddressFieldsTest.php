@@ -4,24 +4,28 @@ declare(strict_types=1);
 namespace LokiCheckout\At\Test\Integration\Layout;
 
 use Loki\Components\Util\Controller\LayoutLoader;
+use LokiCheckout\At\Test\Integration\ObjectManagerTrait;
 use LokiCheckout\Core\Config\Config;
 use LokiCheckout\Core\ViewModel\CheckoutState;
 use Magento\Checkout\Model\Session as CheckoutSession;
+use Magento\Framework\DataObject;
 use Magento\Framework\View\Element\AbstractBlock;
 use Magento\Framework\View\LayoutInterface;
 use Magento\Quote\Api\CartRepositoryInterface;
+use Magento\Quote\Model\Quote;
 use Magento\Quote\Test\Fixture\GuestCart as GuestCartFixture;
 use Magento\TestFramework\Fixture\AppArea;
 use Magento\TestFramework\Fixture\Config as ConfigFixture;
 use Magento\TestFramework\Fixture\DataFixture;
 use Magento\TestFramework\Fixture\DataFixtureStorageManager;
-use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\TestCase;
 
 #[DataFixture(GuestCartFixture::class, as: 'cart')]
 #[AppArea('frontend')]
 class AustrianAddressFieldsTest extends TestCase
 {
+    use ObjectManagerTrait;
+
     #[ConfigFixture('loki_checkout/general/theme', 'default', 'store', 'default')]
     public function testAustrianFieldsWithDefaultSkin(): void
     {
@@ -111,7 +115,7 @@ class AustrianAddressFieldsTest extends TestCase
         string $matchingAddressType,
         string $otherAddressType
     ): void {
-        $config = Bootstrap::getObjectManager()->get(Config::class);
+        $config = $this->get(Config::class);
         $matchingForm = $layout->getBlock('loki-checkout.'.$matchingAddressType.'.address.form');
         $otherForm = $layout->getBlock('loki-checkout.'.$otherAddressType.'.address.form');
         $this->assertInstanceOf(AbstractBlock::class, $matchingForm);
@@ -120,6 +124,9 @@ class AustrianAddressFieldsTest extends TestCase
         $this->assertNotEquals($gridName, $config->getGrid($otherForm)->getName());
     }
 
+    /**
+     * @return array<string, string>
+     */
     private function getExpectedLabels(): array
     {
         return [
@@ -142,17 +149,21 @@ class AustrianAddressFieldsTest extends TestCase
 
     private function getLayout(string $shippingCountryId, string $billingCountryId): LayoutInterface
     {
-        $objectManager = Bootstrap::getObjectManager();
-        $cart = $objectManager->get(DataFixtureStorageManager::class)->getStorage()->get('cart');
-        $cart = $objectManager->get(CartRepositoryInterface::class)->get((int)$cart->getId());
+        $fixture = $this->get(DataFixtureStorageManager::class)->getStorage()->get('cart');
+        $this->assertInstanceOf(DataObject::class, $fixture);
+
+        $cart = $this->get(CartRepositoryInterface::class)->get((int)$fixture->getId());
+        $this->assertInstanceOf(Quote::class, $cart);
         $cart->getShippingAddress()->setCountryId($shippingCountryId);
         $cart->getBillingAddress()->setCountryId($billingCountryId);
 
-        $checkoutState = $objectManager->get(CheckoutState::class);
+        $checkoutState = $this->get(CheckoutState::class);
         $checkoutState->setQuote($cart);
-        $checkoutState->setQuoteId((int)$cart->getId());
-        $objectManager->get(CheckoutSession::class)->replaceQuote($cart);
+        $quoteId = $cart->getId();
+        $this->assertIsNumeric($quoteId);
+        $checkoutState->setQuoteId((int)$quoteId);
+        $this->get(CheckoutSession::class)->replaceQuote($cart);
 
-        return $objectManager->get(LayoutLoader::class)->load(['checkout_index_index'], [], true);
+        return $this->get(LayoutLoader::class)->load(['checkout_index_index'], [], true);
     }
 }
