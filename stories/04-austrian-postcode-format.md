@@ -12,6 +12,6 @@ As a customer from Austria, I want the postcode field to guide me towards a 4-di
   - shows the placeholder `1234`;
   - has the input mask attribute `x-mask="9999"`, restricting input to 4 digits.
 - When the shipping address country is `AT`, the field `loki-checkout.shipping.address.postcode`:
-  - is labelled "Postal code" (translatable);
+  - is labelled "Postcode" (translatable);
   - shows the placeholder `1234`;
   - has the input mask attribute `x-mask="9999"`, restricting input to 4 digits.
