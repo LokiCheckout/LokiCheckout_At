@@ -3,13 +3,19 @@
     "version": "1.0.0",
     "description": "Austrian settings for LokiCheckout",
     "keywords": [
-        "loki-checkout"
+        "loki-checkout",
+        "loki-checkout-category-country"
     ],
     "type": "magento2-module",
     "require": {
         "loki-checkout/magento2-core": "^2.0",
         "magento/framework": "^103.0",
         "php": ">=8.2 <8.6"
+    },
+    "require-dev": {
+        "loki-checkout/magento2-functional-tests": "@dev",
+        "loki/magento2-functional-tests": "@dev",
+        "phpunit/phpunit": "^10.5"
     },
     "license": "OSL-3.0",
     "autoload": {
