@@ -12,5 +12,7 @@ As a customer using an Austrian German storefront, I want the Austrian address f
   - "Street Name" → "Straße"
   - "Housenumber" → "Hausnummer"
   - "Addition" → "Zusatz"
+  - "Postcode" → "Postleitzahl"
+  - "State" → "Bundesland"
   - "State/Province" → "Bundesland"
 - No other strings are translated by this module.
